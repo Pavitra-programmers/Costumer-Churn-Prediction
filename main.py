@@ -3,8 +3,8 @@ from matplotlib import pyplot as plt
 import numpy as np
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.model_selection import train_test_split
-import tensorflow as tf
-from tensorflow import keras
+from sklearn.ensemble import GradientBoostingClassifier
+from sklearn.metrics import accuracy_score, recall_score, f1_score, precision_score
 
 df = pd.read_csv("Churn-Data.csv") #reading the CSV file
 # print(df.sample(5))
@@ -32,51 +32,10 @@ df2[cols_to_scale] = scaler.fit_transform(df2[cols_to_scale])
 x = df2.drop('Churn',axis='columns')
 y = df2['Churn']
 x_train, x_test, y_train, y_test = train_test_split(x,y,test_size=0.2, random_state=5)
-#making the tf model
-model = keras.Sequential([
-    keras.layers.Dense(20, input_shape=(26,), activation='relu'),
-    keras.layers.Dense(1, activation='sigmoid'),
-])
-model.compile(optimizer='adam',
-              loss='binary_crossentropy',
-              metrics=['accuracy'])
-# model.fit(x_train, y_train, epochs=100)
-yp = model.predict(x_test)
-from sklearn.metrics import accuracy_score, precision_score, f1_score, recall_score
-#giving result into 1 and 0
-res = []
-for ele in yp:
-    if ele > 0.5:
-        res.append(1)
-    else:
-        res.append(0)
-#prediction through SVC method
-from sklearn import svm
-svm = svm.SVC()
-svm.fit(x_train,y_train)
-yp1 = svm.predict(x_test)
-#prediction through decision tree classifier
-from sklearn.tree import DecisionTreeClassifier
-dt = DecisionTreeClassifier()
-dt.fit(x_train,y_train)
-yp2 = dt.predict(x_test)
-#prediction through random forest classifier
-from sklearn.ensemble import RandomForestClassifier
-rf = RandomForestClassifier()
-rf.fit(x_train,y_train)
-yp3 = rf.predict(x_test)
 #prediction through gradient boosting classifier
-from sklearn.ensemble import GradientBoostingClassifier
 gbt = GradientBoostingClassifier()
 gbt.fit(x_train,y_train)
 yp4 = gbt.predict(x_test)
 #accuracy and other score
-print("Tensorflow model",accuracy_score(y_test,res),precision_score(y_test,res),recall_score(y_test,res),f1_score(y_test,res))
-print("SVC model",accuracy_score(y_test,yp1),precision_score(y_test,yp1),recall_score(y_test,yp1),f1_score(y_test,yp1))
-print("Decision tree model",accuracy_score(y_test,yp2),precision_score(y_test,yp2),recall_score(y_test,yp2),f1_score(y_test,yp2))
-print("Random Forest model",accuracy_score(y_test,yp3),precision_score(y_test,yp3),recall_score(y_test,yp3),f1_score(y_test,yp3))
 print("Gradient Boosting model",accuracy_score(y_test,yp4),precision_score(y_test,yp4),recall_score(y_test,yp4),f1_score(y_test,yp4))
-# print(res[:5])
-# print(y_test[:5])
-
-# print(x_test.dtypes)
+print(yp4[:5],y_test[:5])
