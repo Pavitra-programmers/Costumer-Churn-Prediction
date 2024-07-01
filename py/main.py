@@ -35,7 +35,7 @@ y = df2['Churn']
 x_train, x_test, y_train, y_test = train_test_split(x,y,test_size=0.2, random_state=5)
 
 
-#prediction through gradient boosting classifier
+# prediction through gradient boosting classifier
 gbt = GradientBoostingClassifier()
 gbt.fit(x,y)
 yp4 = gbt.predict(x_test)

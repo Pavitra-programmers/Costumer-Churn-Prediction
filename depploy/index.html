@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Churn Prediction</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha512-SfTiTlX6kk+qitfevl/7LibUOeJWlt9rbyDn92a1DqWOw9vWG2MFoays0sgObmWazO5BQPiFucnnEAjpAB+/Sw==" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+
+    <!-- Navbar Starts -->
+    <section id="nav-bar">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand font-weight-bold " href="#" style="color: yellow; ">TELECOM</a>
+    
+        <span class="navbar-toggler-icon"></span>
+    
+    <div class="collapse navbar-collapse"  id="navbarNav">
+        <ul class="navbar-nav ml-auto">
+             <li class="nav-item active">
+                <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+             </li>
+             <li class="nav-item">
+                <a class="nav-link" href="#">Predictions</a>
+             </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Contact</a>
+             </li>
+             
+        </ul>
+    </div>
+    </nav>
+    </section>
+    <!-- Navbar Ends -->
+    
+    
+        
+        <form action="{{ url_for('predict')}}" method="post">
+	    <h1>Enter the Information Below and find if a Customer will Churn out or not</h1>
+	    
+    <div class="contentform">
+    	<div id="sendmessage"> Your message has been sent successfully. Thank you. </div>
+
+        
+    	<div class="leftcontact">
+			  <div class="form-group">
+	        <p>Toatal Charges<span>*</span></p>
+          <span class="icon-case"></span>
+				  <input name="TotalCharge"  name="CreditScore" type="number" >
+          <div class="validation"></div>
+        </div> 
+
+        <div class="form-group">
+          <p>Monthly Charges<span>*</span></p>
+          <span class="icon-case"></span>
+				  <input name="Monthly_Charges" required="required">
+          <div class="validation"></div>
+			</div>
+
+			<div class="form-group">
+			  <p>Tenure(years) <span>*</span></p>	
+			  <span class="icon-case"></span>
+        <input name="Tenure" required="required">
+        <div class="validation"></div>
+			</div>	
+      <div class="form-group">
+        <p>If the Customer currently Active:  <span>*</span></p>	
+        <span class="icon-case"></span>
+        <select name="CurrentleActive" id="resea" required="required">
+                        <option>Select</option>
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
+        </select>
+        <div class="validation"></div>
+      </div>
+      <div class="form-group">
+        <p>Internet Service:  <span>*</span></p>	
+        <span class="icon-case"></span>
+        <select name="InternetService" id="resea" required="required">
+          <option>Select</option>
+          <option value="DSL">DSL</option>
+          <option value="Fiber Optic">Fiber Optic</option>
+          <option value="No">No</option>
+        </select>
+        <div class="validation"></div>
+      </div>
+      <div class="form-group">
+        <p>Contract:  <span>*</span></p>	
+        <span class="icon-case"></span>
+        <select name="Contract" id="resea" required="required">
+          <option>Select</option>
+          <option value="Month-to-Month">Month-to-Month</option>
+          <option value="One Year">One Year</option>
+          <option value="Two Year">Two Year</option>
+        </select>
+        <div class="validation"></div>
+      </div>
+      <div class="form-group">
+        <p>Payment Method:  <span>*</span></p>	
+        <span class="icon-case"></span>
+        <select name="PaymentMEthod" id="resea" required="required">
+                      <option>Select</option>
+                      <option value="Bank Transfer">Bank Transfer</option>
+                      <option value="Credit Card">Credit Card</option>
+                      <option value="Electoric Check">Electoric Check</option>
+                      <option value="Check">Mailed Check</option>
+        </select>
+        <div class="validation"></div>
+      </div>
+      <div class="form-group">
+        <p>If the Customer has Device Protection:  <span>*</span></p>	
+        <span class="icon-case"></span>
+        <select name="DevicePro" id="resea" required="required">
+                        <option>Select</option>
+                        <option value=1>Yes</option>
+                        <option value=0>No</option>
+        </select>
+        <div class="validation"></div>
+      </div>
+      <div class="form-group">
+        <p>If the Customer has Tech Support:  <span>*</span></p>	
+        <span class="icon-case"></span>
+        <select name="TechSupport" id="resea" required="required">
+                        <option>Select</option>
+                        <option value=1>Yes</option>
+                        <option value=0>No</option>
+        </select>
+        <div class="validation"></div>
+      </div>
+      <div class="form-group">
+        <p>If the Customer is Dependent:  <span>*</span></p>	
+        <span class="icon-case"></span>
+        <select name="depends" id="resea" required="required">
+                        <option>Select</option>
+                        <option value=1>Yes</option>
+                        <option value=0>No</option>
+        </select>
+        <div class="validation"></div>
+      </div>
+	</div>
+
+	<div class="rightcontact">	
+			<div class="form-group">
+			  <p>Gender of Customer:  <span>*</span></p>	
+			  <span class="icon-case"></span>
+        <select name="Gender" id="resea" required="required">
+                <option>Select</option>
+                <option value=1>Male</option>
+                <option value=0>Female</option>
+        </select>
+        <div class="validation"></div>
+			</div>
+      <div class="form-group">
+        <p>If the Customer is a Partner:  <span>*</span></p>	
+        <span class="icon-case"></span>
+        <select name="Partner" id="resea" required="required">
+                <option>Select</option>
+                <option value=1>Yes</option>
+                <option value=0>No</option>
+        </select>
+        <div class="validation"></div>
+      </div>
+      <div class="form-group">
+        <p>If the Customer is a Senior Citizen:  <span>*</span></p>	
+        <span class="icon-case"></span>
+        <select name="SeniorCitizen" id="resea" required="required">
+                  <option>Select</option>
+                  <option value=1>Yes</option>
+                  <option value=0>No</option>
+        </select>
+        <div class="validation"></div>
+      </div>
+      <div class="form-group">
+        <p>If the Customer has Phone Service:  <span>*</span></p>	
+        <span class="icon-case"></span>
+        <select name="PhoneService" id="resea" required="required">
+                    <option>Select</option>
+                    <option value=1>Yes</option>
+                    <option value=0>No</option>
+        </select>
+        <div class="validation"></div>
+      </div>
+      <div class="form-group">
+        <p>If the Customer has Online Security:  <span>*</span></p>	
+        <span class="icon-case"></span>
+        <select name="OnlineSecurity" id="resea" required="required">
+                    <option>Select</option>
+                    <option value=1>Yes</option>
+                    <option value=0>No</option>
+        </select>
+        <div class="validation"></div>
+      </div>
+      <div class="form-group">
+        <p>If the Customer has Online Backup:  <span>*</span></p>	
+        <span class="icon-case"></span>
+        <select name="OnlineBackup" id="resea" required="required">
+                    <option>Select</option>
+                    <option value=1>Yes</option>
+                    <option value=0>No</option>
+        </select>
+        <div class="validation"></div>
+      </div>
+                
+      <div class="form-group">
+        <p>If the Customer has TV Streaming:  <span>*</span></p>	
+        <span class="icon-case"></span>
+        <select name="TVStreaming" id="resea" required="required">
+                    <option>Select</option>
+                    <option value=1>Yes</option>
+                    <option value=0>No</option>
+        </select>
+        <div class="validation"></div>
+      </div>
+      <div class="form-group">
+        <p>If the Customer has Movie Streaming:  <span>*</span></p>	
+        <span class="icon-case"></span>
+        <select name="MovieStreaming" id="resea" required="required">
+                    <option>Select</option>
+                    <option value=1>Yes</option>
+                    <option value=0>No</option>
+        </select>
+        <div class="validation"></div>
+      </div>
+      <div class="form-group">
+        <p>If the Customer has Paperless Billing:  <span>*</span></p>	
+        <span class="icon-case"></span>
+        <select name="PaplessBill" id="resea" required="required">
+                    <option>Select</option>
+                    <option value=1>Yes</option>
+                    <option value=0>No</option>
+        </select>
+        <div class="validation"></div>
+      </div>
+      <div class="form-group">
+        <p>If the Customer has Multiple Lines:  <span>*</span></p>	
+        <span class="icon-case"></span>
+        <select name="Multiline" id="resea" required="required">
+                        <option>Select</option>
+                        <option value=1>Yes</option>
+                        <option value=0>No</option>
+        </select>
+        <div class="validation"></div>
+      </div>
+                         
+		
+			
+	</div>
+	</div>
+<button  type="submit "  style="box-shadow: 0 4px 15px 0 rgba(49, 196, 190, 0.75); background-image: linear-gradient(to right, #25aae1, #4481eb, #04befe, #3f86ed);">Predict whether the Customer will leave the Company or not?</button>
+	
+</form>	
+    
+   
+   
+
+
+        <br><br><h3 class="alert alert-primary text-center" role="alert">{{ prediction_text }}<h3>
+    </div>
+    <!-- Footer -->
+        <!-- Footer -->
+    <div class="unique-color-dark mt-4 white-text " style="background-color: #1c2331 !important;">
+      <div class="blue-gradient">
+        <div class="container">
+          <!-- Grid row-->
+          <div class="row py-3 d-flex align-items-center">
+            <!-- Grid column -->
+            <div
+              class="col-md-6 col-lg-5 text-center text-md-left"
+            >
+              <h6 class="mb-0 text-white">Developed by Manan Bedi   <a href="https://github.com/manan-bedi2908/Customer_Churn-Deployment"><i class="ml-5 fa fa-github fa-2x" aria-hidden="true"></i></a><a href="https://www.linkedin.com/in/manan-bedi-20a80a190/"><i class="ml-5 fa fa-linkedin fa-2x" aria-hidden="true"></i></a></h6>
+            </div>
+            <!-- Grid column -->
+
+            
+            <!-- Grid column -->
+          </div>
+          <!-- Grid row-->
+        </div>
+      </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+</body>
+
+</html>
