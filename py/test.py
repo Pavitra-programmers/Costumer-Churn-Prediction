@@ -11,20 +11,20 @@ pick_out.close()
 scaler = MinMaxScaler()
 
 # Example sample data for fitting the scaler
-sample_data = np.array([[1], [5], [10], [20], [30], [50]])
+
 
 # Fit the scaler on the sample data
-scaler.fit(sample_data)
+
 
 # Transform the individual values
 tenure = 21
-tenure_scaled = scaler.transform([[tenure]])[0][0]
+tenure_scaled = scaler.fit_transform([[tenure]])[0][0]
 
 totchar = 1336.8
-totchar_scaled = scaler.transform([[totchar]])[0][0]
+totchar_scaled = scaler.fit_transform([[totchar]])[0][0]
 
 monchar = 64.85
-monchar_scaled = scaler.transform([[monchar]])[0][0]
+monchar_scaled = scaler.fit_transform([[monchar]])[0][0]
 
 # Create the data array
 data1 = [0, 0, 0, 1, tenure_scaled, 1, 0, 1, 0, 1, 0, 0, 1, 0, monchar_scaled, totchar_scaled, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1]

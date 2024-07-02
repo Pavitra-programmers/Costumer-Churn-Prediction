@@ -28,6 +28,8 @@ body {
     outline: none !important;
 }
  #banner {
+   display: block;
+   top: 0px;
    background: rgb(182, 18, 18) !important;
    color: #fff;
    padding-top: 5%;
@@ -203,6 +205,10 @@ i {
 button{
   height: 42px;
   width: 700px;
+}
+
+.bottom{
+  margin-bottom: 0px;
 }
   
 

@@ -6,14 +6,11 @@ from sklearn.preprocessing import MinMaxScaler
 
 # Initialize the scaler
 scaler = MinMaxScaler()
-# Example sample data for fitting the scaler
-sample_data = np.array([[1], [5], [10], [20], [30], [50]])
-# Fit the scaler on the sample data
-scaler.fit(sample_data)
+
 
 
 app = Flask(__name__)
-model = pickle.load(open('GBTchurnmodel.sav', 'rb'))
+model = pickle.load(open(r'C:\Users\dines\OneDrive\Desktop\Github\Costumer Churn\GBTchurnmodel.sav', 'rb'))
 @app.route('/', methods=['GET'])
 def Home():
     return render_template('index.html')
@@ -23,11 +20,11 @@ def Home():
 def predict():
     if request.method == 'POST':
         TotalCharge = int(request.form['TotalCharge'])
-        totchar_scaled = scaler.transform([[TotalCharge]])[0][0]
+        totchar_scaled = scaler.fit_transform([[TotalCharge]])[0][0]
         Monthly_Charges = int(request.form['Monthly_Charges'])
-        monchar_scaled = scaler.transform([[Monthly_Charges]])[0][0]
+        monchar_scaled = scaler.fit_transform([[Monthly_Charges]])[0][0]
         Tenure = int(request.form['Tenure'])
-        tenure_scaled = scaler.transform([[Tenure]])[0][0]
+        tenure_scaled = scaler.fit_transform([[Tenure]])[0][0]
         InternetService = request.form['InternetService']
         if(InternetService == 'DSL'):
             DSL = 1
@@ -95,11 +92,11 @@ def predict():
         Multiline = request.form['Multiline']
         data1 = [Gender,SeniorCitizen,Partner,Dependent,tenure_scaled,PhoneService,Multiline,OnlineSecurity,OnlineBackup,DeviceProtection,TechSupport,TVStreaming,MovieStreaming,PaplessBill,monchar_scaled,totchar_scaled,DSL,Fiber_op,No,mtm,oney,twoy,BT,CC,EC,C]
         data2 = np.asarray(data1).reshape(1, -1)
-        prediction = model.predict([data2])
+        prediction = model.predict(data2)
         if prediction==1:
-             return render_template('index.html',prediction_text="The Customer will leave the bank")
+             return render_template('index.html',prediction_text="The Customer will leave the Company")
         else:
-             return render_template('index.html',prediction_text="The Customer will not leave the bank")
+             return render_template('index.html',prediction_text="The Customer will not leave the Company")
                 
 if __name__=="__main__":
     app.run(debug=True)
