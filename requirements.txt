@@ -1,2 +1,7 @@
 Flask
 Gunicorn
+requests
+pickle
+numpy
+sklear
+scikit-learn
