@@ -10,7 +10,7 @@ scaler = MinMaxScaler()
 
 
 app = Flask(__name__)
-model = pickle.load(open(r'C:\Users\dines\OneDrive\Desktop\Github\Costumer Churn\GBTchurnmodel.sav', 'rb'))
+model = pickle.load(open('GBTchurnmodel.sav', 'rb'))
 @app.route('/', methods=['GET'])
 def Home():
     return render_template('index.html')
