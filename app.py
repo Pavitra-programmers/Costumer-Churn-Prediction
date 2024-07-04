@@ -7,15 +7,14 @@ from sklearn.preprocessing import MinMaxScaler
 # Initialize the scaler
 scaler = MinMaxScaler()
 
-
-
 app = Flask(__name__)
+#loading the Model that we had previously trained
 model = pickle.load(open('GBTchurnmodel.sav', 'rb'))
 @app.route('/', methods=['GET'])
 def Home():
     return render_template('index.html')
 
-
+#requesting the input and displaying the output
 @app.route('/predict',methods=['POST'])
 def predict():
     if request.method == 'POST':
@@ -26,6 +25,7 @@ def predict():
         Tenure = int(request.form['Tenure'])
         tenure_scaled = scaler.fit_transform([[Tenure]])[0][0]
         InternetService = request.form['InternetService']
+        #manually doing one hot encoding
         if(InternetService == 'DSL'):
             DSL = 1
             Fiber_op= 0
@@ -92,6 +92,7 @@ def predict():
         Multiline = request.form['Multiline']
         data1 = [Gender,SeniorCitizen,Partner,Dependent,tenure_scaled,PhoneService,Multiline,OnlineSecurity,OnlineBackup,DeviceProtection,TechSupport,TVStreaming,MovieStreaming,PaplessBill,monchar_scaled,totchar_scaled,DSL,Fiber_op,No,mtm,oney,twoy,BT,CC,EC,C]
         data2 = np.asarray(data1).reshape(1, -1)
+        #making the prediction
         prediction = model.predict(data2)
         if prediction==1:
              return render_template('index.html',prediction_text="The Customer will leave the Company")
